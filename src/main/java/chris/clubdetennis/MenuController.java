@@ -55,10 +55,6 @@ public class MenuController implements Initializable {
 
     @FXML
     private TableView<Joueur> TableView;
-
-    @FXML
-    private TableColumn<Joueur, Integer> idColumn;
-
     @FXML
     private TableColumn<Joueur, String> prenomColumn;
 
@@ -73,15 +69,14 @@ public class MenuController implements Initializable {
 
     Connection connexion;
 
-    private ObservableList<Joueur> booksList;
+    private ObservableList<Joueur> joueurList;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {// Cette m�thode se charge automatiquement. Donc
         // c'est la premi�re � se charger sur cette page
 
         LoadDatabse();
-        idColumn.setCellValueFactory(new PropertyValueFactory<Joueur, Integer>("id"));// cr�� les cellules de la
-        // colonne
+      // cr�� les cellules de la colonne
         nomColumn.setCellValueFactory(new PropertyValueFactory<Joueur, String>("nom"));
         prenomColumn.setCellValueFactory(new PropertyValueFactory<Joueur, String>("prenom"));
         niveauColumn.setCellValueFactory(new PropertyValueFactory<Joueur, String>("niveau"));
@@ -127,13 +122,13 @@ public class MenuController implements Initializable {
     @FXML
     private void updateButton() {
         try {
-            Joueur book2 = (Joueur) TableView.getSelectionModel().getSelectedItem();// retourne l'objet qui se trouve
+            Joueur j2 = (Joueur) TableView.getSelectionModel().getSelectedItem();// retourne l'objet qui se trouve
             // � l'endroit s�lectionn�
             // dans ce cas il s'agit de
             // l'objet book2
 
-            if (book2 == null) {// alert message
-                Alert alert = new Alert(AlertType.WARNING);
+            if (j2 == null) {// alert message
+                Alert alert = new Alert(AlertType.CONFIRMATION);
 
                 alert.setTitle("Erreur");
                 alert.setHeaderText("Aucune personne sélectionnée");
@@ -152,7 +147,7 @@ public class MenuController implements Initializable {
                 st.setString(2, PrenomField.getText());
                 st.setString(3, NiveauField.getText());
                 st.setString(4, AgeField.getText());
-                st.setInt(5, book2.getId());// on prend l'id de l'objet book2 et pas d'un textfield
+                st.setInt(5, j2.getId());// on prend l'id de l'objet j2 et pas d'un textfield
                 st.executeUpdate();
 
                 st.close();
@@ -173,9 +168,9 @@ public class MenuController implements Initializable {
     private void deleteButton() {
 
         try {
-            Joueur book3 = (Joueur) TableView.getSelectionModel().getSelectedItem();
+            Joueur j3 = (Joueur) TableView.getSelectionModel().getSelectedItem();
 
-            if (book3 == null) {// alert message
+            if (j3 == null) {// alert message
                 Alert alert = new Alert(AlertType.WARNING);
 
                 alert.setTitle("Erreur");
@@ -190,7 +185,7 @@ public class MenuController implements Initializable {
                 String query = "DELETE FROM joueurs WHERE id=?";
                 Connection connexion = getConnection();
                 PreparedStatement st = connexion.prepareStatement(query);
-                st.setInt(1, book3.getId());// on prend l'id de l'objet book2 et pas d'un textfield
+                st.setInt(1, j3.getId());// on prend l'id de l'objet book2 et pas d'un textfield
                 st.executeUpdate();
 
                 st.close();
@@ -241,7 +236,7 @@ public class MenuController implements Initializable {
 
     public void LoadDatabse() {// m�thode pour mettre � jour la table
 
-        booksList = FXCollections.observableArrayList();// la liste doit �tre dans cette m�thode pour rafraichir la
+        joueurList = FXCollections.observableArrayList();// la liste doit �tre dans cette m�thode pour rafraichir la
         // table
         // quand on clique sur un bouton qui va lancer la m�thode
         // LoadDatase
@@ -253,13 +248,13 @@ public class MenuController implements Initializable {
         try {
             st = connection.createStatement();
             rs = st.executeQuery(query);
-            Joueur books;
+            Joueur js;
             while (rs.next()) {
-                books = new Joueur(rs.getInt("Id"), rs.getString("Nom"), rs.getString("Prenom"),
+                js = new Joueur(rs.getInt("Id"), rs.getString("Nom"), rs.getString("Prenom"),
                         rs.getString("Niveau"), rs.getInt("Age"));
-                booksList.add(books);
+                joueurList.add(js);
 
-                TableView.setItems(booksList);
+                TableView.setItems(joueurList);
             }
         } catch (Exception e) {
             e.printStackTrace();

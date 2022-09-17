@@ -54,15 +54,14 @@
         </HBox>
         <TableView fx:id="TableView" layoutX="274.0" layoutY="80.0" prefHeight="249.0" prefWidth="378.0">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="35.0" text="ID" />
                 <TableColumn fx:id="nomColumn" prefWidth="90.0" text="Nom" />
                 <TableColumn fx:id="prenomColumn" prefWidth="87.0" text="Prenom" />
                 <TableColumn fx:id="niveauColumn" prefWidth="118.0" text="Niveau" />
-                <TableColumn fx:id="ageColumn" prefWidth="50.0" text="Age" />
+                <TableColumn fx:id="ageColumn" prefWidth="82.0" text="Age" />
             </columns>
         </TableView>
         <Label fx:id="Labelinfos" layoutX="90.0" layoutY="252.0" prefHeight="30.0" prefWidth="160.0" textFill="#176f1d" />
-        <Label layoutX="254.0" layoutY="4.0" prefHeight="47.0" prefWidth="214.0" text="Club de tennis" textFill="#3d87c3">
+        <Label layoutX="254.0" layoutY="4.0" prefHeight="53.0" prefWidth="274.0" text="Club de tennis" textFill="#3d87c3">
             <font>
                 <Font name="System Italic" size="36.0" />
             </font>
